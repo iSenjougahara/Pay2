@@ -1,2 +1,0 @@
-# Pay2
- Avaliação
