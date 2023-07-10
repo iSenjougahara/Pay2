@@ -12,32 +12,48 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/welcome', function () {
+    return view('welcome');
+});
+$router->get('/login', function () {
+    return view('login');
+});
+$router->get('/logged', function () {
+    return view('logged');
+});
+$router->get('/users', function () {
+    return view('users');
+});
+
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-   // $router->post('/register', 'AuthController@register');
-    $router->post('/login', 'AuthController@login');
+    $router->post('/login', 'UserController@login');
     $router->post('/register', 'UserController@create');
     $router->put('/userUpdate/{id}', 'UserController@update');
-    $router->post('/user', 'UserController@store');
-    $router->post('/logout', 'AuthController@logout');
-    $router->delete('/userDelete/{id}', 'UserController@delete');
+    //$router->post('/user', 'UserController@store');
+    $router->post('/logout', 'UserController@logout');
+   
     $router->get('/user/{id}', 'UserController@getById');
-    $router->get('/users', 'UserController@getAll');
-    $router->post('/depo', 'ContaController@deposito');
-    $router->post('/trans', 'ContaController@transferencia');
-    
+    $router->delete('/userDelete/{id}', 'UserController@delete');
+   
+   
+  
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
-       
+        // Add authenticated routes here
+        $router->get('/users', 'UserController@getAll');
+        $router->get('/user', 'UserController@getSelf');
+        $router->get('/conta', 'UserController@getConta');
+        $router->get('/movimentos', 'ContaController@getMovimentos');
+        $router->post('/depo', 'ContaController@deposito');
+        $router->post('/trans', 'ContaController@transferencia');
         
-        
-        //$router->get('/posts', 'PostController@index');
-        //$router->post('/posts', 'PostController@store');
-        //$router->put('/posts/{id}', 'PostController@update');
-        //
+
+
     });
 });

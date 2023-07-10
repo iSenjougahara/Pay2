@@ -28,7 +28,6 @@ class UserRepository implements IUserRepository{
             return $user;
         }
 
-       // return User::create($data);
     }
     public function update($id, array $data)
     {

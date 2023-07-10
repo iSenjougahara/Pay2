@@ -57,36 +57,18 @@ class ContaRepository implements IContaRepository
 
         return false;
     }
-/*
-    public function deposit($contaId, $amount)
-{
-    $conta = Conta::find($contaId);
 
-    if ($conta) {
-        $conta->saldo += $amount;
-        $conta->save();
-        return true;
-    }
-
-    return false;
-}
-*/
 public function deposito($id, $valor)
 {
     $conta = Conta::find($id);
     
     if (!$conta) {
-        return "Conta not found"; // Conta not found
+        return "Conta not found"; 
     }
 
-    // Update saldo
+
     $conta->saldo += $valor;
     $conta->save();
-
-    //$mm=;
-
-    //return $mm;
-    // Create a new deposito movimento
     $movimento = new Movimento([
         'valor' => $valor,
         'conta_id' => $conta->id,
@@ -110,28 +92,42 @@ public function transferencia($senderId, $receiverId, $valor)
         return "Conta not found";
     }
 
-    // Check if sender has sufficient saldo
+
     if ($senderConta->saldo < $valor) {
         return "Not enough money";
     }
 
-    // Update saldo for sender and receiver
+ 
     $senderConta->saldo -= $valor;
     $receiverConta->saldo += $valor;
     $senderConta->save();
     $receiverConta->save();
 
-    // Create a new transferencia movimento for sender
     $senderMovimento = new Movimento([
         'valor' => $valor,
         'conta_id' => $senderConta->id,
         'receiver' => $receiverConta->id,
     ]);
-    $senderMovimento->save(); // Save the movimento first to assign an ID
+    $senderMovimento->save(); 
     $senderMovimento->code = 'TRANSF' . str_pad($senderMovimento->id, 4, '0', STR_PAD_LEFT);
-    $senderMovimento->save(); // Update the movimento with the correct code
+    $senderMovimento->save(); 
 
     return true;
+}
+
+public function getMov($id)
+{
+    $movimentos = Movimento::where('conta_id', $id)->get();
+    return $movimentos->toJson();
+}
+      
+public function getContaIdByUserId($userId)
+{
+    $conta = Conta::where('user_id', $userId)->first();
+    if ($conta) {
+        return $conta->id;
+    }
+    return null;
 }
 
 

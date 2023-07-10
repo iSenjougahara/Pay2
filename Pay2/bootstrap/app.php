@@ -72,9 +72,10 @@ $app->configure('auth');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+ $app->middleware([
+    //App\Http\Middleware\ExampleMiddleware::class
+    App\Http\Middleware\CorsMiddleware::class,
+ ]);
 
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
@@ -96,6 +97,9 @@ $app->configure('auth');
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Laravel\Sail\SailServiceProvider::class);
+//$app->register(App\Providers\ViewServiceProvider::class);
+
 
 
 

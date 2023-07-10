@@ -36,7 +36,6 @@ class ContaController extends Controller
 
     if ($success===true) {
         return response()->json(['message' => 'Deposito created successfully']);
-        //return response()->json(['message' => $success]);
     } else {
         return response()->json(['message' => $success], 422);
     }
@@ -48,17 +47,15 @@ public function transferencia(Request $request)
         'receiver' => 'required',
         'valor' => 'required|numeric',
     ]);
-
+   // return response()->json(['message' => $request->json()], 422);
     if ($validator->fails()) {
         return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
     }
 
     $senderId = $request->user()->id;
+   // return response()->json(['message' => $senderId], 422);
     $receiverId = $request->json('receiver');
     $valor = $request->json('valor');
-
-    //return response()->json(['message' => $senderId]);
-
     $success = $this->contaRepository->transferencia($senderId, $receiverId, $valor);
 
     if ($success===true) {
@@ -68,6 +65,14 @@ public function transferencia(Request $request)
     }
 }
 
+public function getMovimentos(Request $request)
+{
+    $userId = $request->user()->id;
+    $contaId = $this->contaRepository->getContaIdByUserId($userId);
+    $movimentos = $this->contaRepository->getMov($contaId);
+
+    return response()->json($movimentos);
+}
 
 
 

@@ -11,6 +11,8 @@ interface IContaRepository {
     public function getByUser($userId);
     public function deposito($contaId, $valor);
     public function transferencia($contaId, $valor,$rid);
+    public function getMov($id);
+    public function getContaIdByUserId($userId);
 
   
 
