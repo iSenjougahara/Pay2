@@ -10,10 +10,46 @@ class UserRepository implements IUserRepository{
         return User::all()->toJson();
     }
 
+    public function getByEmail($email)
+    {
+        return User::where('email', $email)->first();
+    }
+    public function getById($id)
+    {
+        return User::find($id);
+    }
+    public function create(array $data)   
+    {
+
+        $user = new User($data);
+
+
+        if ($user->save()) {
+            return $user;
+        }
+
+       // return User::create($data);
+    }
+    public function update($id, array $data)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->update($data);
+            return true;
+        }
+
+        return false;
+    }
+    public function delete($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            return true;
+        }
+    
+        return false;
+    }
 
 }
-
-
-
-
-?>

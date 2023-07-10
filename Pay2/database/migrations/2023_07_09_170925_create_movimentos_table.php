@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('movimentos', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
+            $table->decimal('valor', 8, 2);
+            $table->unsignedBigInteger('receiver')->nullable();
+            $table->unsignedBigInteger('conta_id');
+            $table->foreign('conta_id')->references('id')->on('contas');
             $table->timestamps();
         });
+        
     }
 
     /**

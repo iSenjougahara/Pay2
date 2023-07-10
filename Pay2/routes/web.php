@@ -18,21 +18,26 @@ $router->get('/', function () use ($router) {
 
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('/register', 'AuthController@register');
+   // $router->post('/register', 'AuthController@register');
     $router->post('/login', 'AuthController@login');
-   
+    $router->post('/register', 'UserController@create');
+    $router->put('/userUpdate/{id}', 'UserController@update');
     $router->post('/user', 'UserController@store');
     $router->post('/logout', 'AuthController@logout');
-    
+    $router->delete('/userDelete/{id}', 'UserController@delete');
+    $router->get('/user/{id}', 'UserController@getById');
+    $router->get('/users', 'UserController@getAll');
+    $router->post('/depo', 'ContaController@deposito');
+    $router->post('/trans', 'ContaController@transferencia');
     
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->get('/users', 'UserController@getAll');
+       
         
         
         //$router->get('/posts', 'PostController@index');
         //$router->post('/posts', 'PostController@store');
         //$router->put('/posts/{id}', 'PostController@update');
-        //$router->delete('/posts/{id}', 'PostController@destroy');
+        //
     });
 });

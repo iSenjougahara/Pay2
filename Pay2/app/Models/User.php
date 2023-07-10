@@ -20,8 +20,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email',
+        'nomeCompleto',
+        'DataNasc',
+        'CPF',
+        'email',
+        'password',
+        'CEP',
+        'Complemento',
+        'NumeroEndereco',
     ];
+    public function conta()
+{
+    return $this->hasOne(Conta::class);
+}
+
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -30,6 +42,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $hidden = [
         'password',
+        //'access_token',
     ];
 
     public function getJWTIdentifier()
