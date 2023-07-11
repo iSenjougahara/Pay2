@@ -29,7 +29,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/login', 'UserController@login');
     $router->post('/register', 'UserController@create');
     $router->put('/userUpdate/{id}', 'UserController@update');
-    //$router->post('/user', 'UserController@store');
+ 
     $router->post('/logout', 'UserController@logout');
    
     $router->get('/user/{id}', 'UserController@getById');
