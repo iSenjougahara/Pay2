@@ -192,7 +192,7 @@
             .catch(error => {
                 console.error('Error:', error);
             });
-            window.location.href = '/login';
+            window.location.href = '/';
         }
 
         // Add event listeners to the buttons and forms
