@@ -13,14 +13,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
 
-$router->get('/welcome', function () {
-    return view('welcome');
-});
-$router->get('/login', function () {
+$router->get('/', function () {
     return view('login');
 });
 $router->get('/logged', function () {
